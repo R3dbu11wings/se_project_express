@@ -25,8 +25,9 @@ const createUser = (req, res) => {
       console.error(err);
       if (err.name === "ValidationError") {
         return res.status(BAD_REQUEST_ERROR).send({ message: err.message });
-      } else {
-        return res
+      }
+      {
+        res
           .status(DEFAULT_ERROR)
           .send({ message: "An error has occurred on the server." });
       }
@@ -41,11 +42,12 @@ const getUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND_ERROR).send({ message: err.message });
-      } else {
+        res.status(NOT_FOUND_ERROR).send({ message: err.message });
+      }
+      {
         res.status(BAD_REQUEST_ERROR).send({ message: err.message });
       }
-      return res
+      res
         .status(DEFAULT_ERROR)
         .send({ message: "An error has occurred on the server." });
     });

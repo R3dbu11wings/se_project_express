@@ -43,7 +43,7 @@ const deleteItem = (req, res) => {
   const { itemId } = req.params;
   ClothingItem.findByIdAndDelete(itemId)
     .orFail()
-    .then((item) => res.status(204).send({}))
+    .then(() => res.status(204).send({}))
     .catch((err) => {
       res.status(DEFAULT_ERROR).send({ message: "Error from deleteItem", err });
     });
@@ -61,12 +61,10 @@ const likeItem = (req, res) => {
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
       if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
+        res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
       }
       if (err.name === "CastError") {
-        return res
-          .status(BAD_REQUEST_ERROR)
-          .send({ message: "Invalid item ID" });
+        res.status(BAD_REQUEST_ERROR).send({ message: "Invalid item ID" });
       }
       res.status(DEFAULT_ERROR).send({ message: "Error from likeItem", err });
     });
