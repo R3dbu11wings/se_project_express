@@ -89,7 +89,7 @@ const dislikeItem = (req, res) => {
           .status(BAD_REQUEST_ERROR)
           .send({ message: "Invalid item ID" });
       }
-      res
+      return res
         .status(DEFAULT_ERROR)
         .send({ message: "Error from dislikeItem", err });
     });
