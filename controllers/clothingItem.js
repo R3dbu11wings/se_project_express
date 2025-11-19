@@ -9,13 +9,9 @@ const createItem = (req, res) => {
   const { name, weather, imageUrl } = req.body;
 
   ClothingItem.create({ name, weather, imageUrl })
-    .then((item) => {
-      return res.send({ data: item });
-    })
+    .then((item) => res.status(201).send({ data: item }))
     .catch((err) => {
-      console.error("Full error", err);
       if (err.name === "ValidationError") {
-        console.log("Validation errors:", err.errors);
         return res
           .status(BAD_REQUEST_ERROR)
           .send({ message: "Invalid data provided" });
@@ -56,7 +52,6 @@ const deleteItem = (req, res) => {
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
-      console.error(err);
       if (err.name === "DocumentNotFoundError") {
         return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });
       }
