@@ -25,11 +25,9 @@ const createItem = (req, res) => {
 const getItems = (req, res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((err) => {
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Get items Failed", err });
-    });
+    .catch((err) =>
+      res.status(DEFAULT_ERROR).send({ message: "Get items Failed", err })
+    );
 };
 
 const updateItem = (req, res) => {
@@ -39,11 +37,9 @@ const updateItem = (req, res) => {
   ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
-    .catch((err) => {
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Error from updateItems", err });
-    });
+    .catch((err) =>
+      res.status(DEFAULT_ERROR).send({ message: "Error from updateItems", err })
+    );
 };
 
 const deleteItem = (req, res) => {
