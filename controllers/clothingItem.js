@@ -25,9 +25,10 @@ const createItem = (req, res) => {
 const getItems = (req, res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((err) =>
-      res.status(DEFAULT_ERROR).send({ message: "Get items Failed" })
-    );
+    .catch((err) => {
+      console.error("Error fetching items:", err);
+      res.status(DEFAULT_ERROR).send({ message: "Get items Failed" });
+    });
 };
 
 // const updateItem = (req, res) => {
