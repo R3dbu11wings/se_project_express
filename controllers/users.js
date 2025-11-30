@@ -72,8 +72,8 @@ const login = (req, res) => {
     });
 };
 
-const getCurrentUser = (req, res) => {
-  return User.findById(req.user._id)
+const getCurrentUser = (req, res) =>
+  User.findById(req.user._id)
     .orFail()
     .then((user) => res.status(200).send(user))
     .catch((err) => {
@@ -90,7 +90,6 @@ const getCurrentUser = (req, res) => {
         .status(DEFAULT_ERROR)
         .send({ message: "An error has occurred on the server." });
     });
-};
 
 const updateProfile = (req, res) => {
   const { name, avatar } = req.body;
@@ -102,7 +101,7 @@ const updateProfile = (req, res) => {
     });
   }
 
-  User.findByIdAndUpdate(
+  return User.findByIdAndUpdate(
     userId,
     { name, avatar },
     { new: true, runValidators: true }
