@@ -84,7 +84,7 @@ const getCurrentUser = (req, res) => {
       if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST_ERROR)
-          .send({ message: "Email and password are required" });
+          .send({ message: "Invalid user ID" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -95,6 +95,12 @@ const getCurrentUser = (req, res) => {
 const updateProfile = (req, res) => {
   const { name, avatar } = req.body;
   const userId = req.user._id;
+
+  if (!name && !avatar) {
+    return res.status(BAD_REQUEST_ERROR).send({
+      message: "At least one field (name or avatar) must be provided",
+    });
+  }
 
   User.findByIdAndUpdate(
     userId,
@@ -111,7 +117,7 @@ const updateProfile = (req, res) => {
       if (err.name === "ValidationError") {
         return res
           .status(BAD_REQUEST_ERROR)
-          .send({ message: "Email and password are required" });
+          .send({ message: "Invalid data provided" });
       }
       if (err.name === "CastError") {
         return res
