@@ -10,19 +10,14 @@ const {
   CONFLICT_ERROR,
 } = require("../utils/errors");
 
-const getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
-    .catch((err) => {
-      console.error(err);
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "An error has occurred on the server." });
-    });
-};
-
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(BAD_REQUEST_ERROR).send({
+      message: "The 'email' and 'password' fields are required",
+    });
+  }
 
   bcrypt
     .hash(password, 10)
@@ -40,7 +35,7 @@ const createUser = (req, res) => {
           .send({ message: "User with this email already exists" });
       }
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST_ERROR).send({ message: err.message });
+        return res.status(BAD_REQUEST_ERROR).send({ message: "Invalid data" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -57,7 +52,7 @@ const login = (req, res) => {
       .send({ message: "Email and password are required" });
   }
 
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
@@ -66,9 +61,14 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
+      if (err.message === "Incorrect email or password") {
+        return res
+          .status(UNAUTHORIZED_ERROR)
+          .send({ message: "Incorrect email or password" });
+      }
       return res
-        .status(UNAUTHORIZED_ERROR)
-        .send({ message: "Incorrect email or password" });
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server." });
     });
 };
 
@@ -79,10 +79,12 @@ const getCurrentUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        return res.status(NOT_FOUND_ERROR).send({ message: err.message });
+        return res.status(NOT_FOUND_ERROR).send({ message: "User not found" });
       }
       if (err.name === "CastError") {
-        return res.status(BAD_REQUEST_ERROR).send({ message: err.message });
+        return res
+          .status(BAD_REQUEST_ERROR)
+          .send({ message: "Email and password are required" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -107,7 +109,9 @@ const updateProfile = (req, res) => {
         return res.status(NOT_FOUND_ERROR).send({ message: "User not found" });
       }
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST_ERROR).send({ message: err.message });
+        return res
+          .status(BAD_REQUEST_ERROR)
+          .send({ message: "Email and password are required" });
       }
       if (err.name === "CastError") {
         return res
@@ -120,4 +124,4 @@ const updateProfile = (req, res) => {
     });
 };
 
-module.exports = { getUsers, createUser, login, getCurrentUser, updateProfile };
+module.exports = { createUser, login, getCurrentUser, updateProfile };

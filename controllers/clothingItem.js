@@ -55,7 +55,7 @@ const deleteItem = (req, res) => {
       if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST_ERROR)
-          .send({ message: "Invalid item ID", err });
+          .send({ message: "Invalid item ID" });
       }
       return res
         .status(DEFAULT_ERROR)
@@ -82,9 +82,7 @@ const likeItem = (req, res) => {
           .status(BAD_REQUEST_ERROR)
           .send({ message: "Invalid item ID" });
       }
-      return res
-        .status(DEFAULT_ERROR)
-        .send({ message: "Error from likeItem", err });
+      return res.status(DEFAULT_ERROR).send({ message: "Error from likeItem" });
     });
 };
 
@@ -109,7 +107,7 @@ const dislikeItem = (req, res) => {
       }
       return res
         .status(DEFAULT_ERROR)
-        .send({ message: "Error from dislikeItem", err });
+        .send({ message: "Error from dislikeItem" });
     });
 };
 
