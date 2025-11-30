@@ -1,6 +1,7 @@
 const ClothingItem = require("../models/clothingItem");
 const {
   BAD_REQUEST_ERROR,
+  FORBIDDEN_ERROR,
   NOT_FOUND_ERROR,
   DEFAULT_ERROR,
 } = require("../utils/errors");
@@ -31,23 +32,22 @@ const getItems = (req, res) => {
     });
 };
 
-// const updateItem = (req, res) => {
-//   const { itemId } = req.params;
-//   const { imageUrl } = req.body;
-
-//   ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
-//     .orFail()
-//     .then((item) => res.status(200).send({ data: item }))
-//     .catch((err) =>
-//       res.status(DEFAULT_ERROR).send({ message: "Error from updateItems" })
-//     );
-// };
-
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
-  ClothingItem.findByIdAndDelete(itemId)
+
+  ClothingItem.findById(itemId)
     .orFail()
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => {
+      if (item.owner.toString() !== req.user._id) {
+        return res
+          .status(FORBIDDEN_ERROR)
+          .send({ message: "You are not authorized to delete this item" });
+      }
+      return ClothingItem.findByIdAndDelete(itemId).then((deletedItem) =>
+        res.status(200).send({ data: deletedItem })
+      );
+    })
+
     .catch((err) => {
       if (err.name === "DocumentNotFoundError") {
         return res.status(NOT_FOUND_ERROR).send({ message: "Item not found" });

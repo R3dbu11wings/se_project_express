@@ -15,3 +15,8 @@ Before committing your code, make sure you edit the file `sprint.txt` in the roo
 ### Technologies & Techniques
 
 Express, Node.js, MongoDB/Mongoose, ESLint/Prettier,and Postman.
+
+## Project Pitch Video
+
+Check out [this video](https://drive.google.com/file/d/1U5enLPSAbusNeRL3u0crf1jKdXJDapji/view?usp=sharing), where I describe my
+project and some challenges I faced while building it.
