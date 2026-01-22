@@ -18,5 +18,8 @@ Express, Node.js, MongoDB/Mongoose, ESLint/Prettier,and Postman.
 
 ## Project Pitch Video
 
-Check out [this video](https://drive.google.com/file/d/1U5enLPSAbusNeRL3u0crf1jKdXJDapji/view?usp=sharing), where I describe my
-project and some challenges I faced while building it.
+Check out these videos, where I describe my project
+and some challenges I faced while building it:
+
+- [First Video Title](https://drive.google.com/file/d/19Bb9Ev2WFMKI5NG3sSQDLzG3fmY6wVLk/view?usp=drive_link)
+- [Second Video Title](https://drive.google.com/file/d/1U5enLPSAbusNeRL3u0crf1jKdXJDapji/view?usp=sharing)
