@@ -16,10 +16,15 @@ Before committing your code, make sure you edit the file `sprint.txt` in the roo
 
 Express, Node.js, MongoDB/Mongoose, ESLint/Prettier,and Postman.
 
+## Domain Name
+
+https://www.coldhotweather.servernux.com/
+
+## Frontend Git repo
+
+https://github.com/R3dbu11wings/se_project_react
+
 ## Project Pitch Video
 
-Check out these videos, where I describe my project
-and some challenges I faced while building it:
-
-- [First Video Title](https://drive.google.com/file/d/19Bb9Ev2WFMKI5NG3sSQDLzG3fmY6wVLk/view?usp=drive_link)
-- [Second Video Title](https://drive.google.com/file/d/1U5enLPSAbusNeRL3u0crf1jKdXJDapji/view?usp=sharing)
+Check out [this video](https://drive.google.com/file/d/1_BZKDGSltRAhyUohftEMB0zukOwoC3RW/view?usp=drive_link), where I describe my
+project and some challenges I faced while building it.
